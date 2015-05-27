@@ -97,7 +97,7 @@ function cfBkup ($domains, $domain, $subdomain, $cfkey, $cfemail){
 			break;
 		}  	
 	}
-	if (strcmp($DNSID, "" != 0)){
+	if (strcmp($DNSID, "" )!= 0){
 //		echo "DNSID: ".$DNSID;
 		$ch= curl_init("https://www.cloudflare.com/api_json.html");
         	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
@@ -138,6 +138,10 @@ if (!empty($_POST['URL']) && !empty($_POST['Status'])){
 		//do more stuff here for subdomains
 		$FQDN=explode(".",$checkDomain);
 		$FQDN=$FQDN[sizeof($FQDN)-2].".".$FQDN[sizeof($FQDN)-1];
+		
+		//if your FQDN is seperated by 2 periods (ex: something.co.uk), uncomment the line below
+                // $FQDN=$FQDN[sizeof($FQDN)-3].".".$FQDN[sizeof($FQDN)-2].".".$FQDN[sizeof($FQDN)-1];
+
 		echo $FQDN;
 		cfBkup ($CF_domains, $FQDN, $checkDomain, $CF_key, $CF_email);
 	} else { echo "invalid url, alert type, or the backup server is unreachable";};
